@@ -26,24 +26,13 @@ for line in game_results_list:
     red_list = []
     green_list = []
     blue_list = []
+    game_possible = True
 
     for game in results_list:
         colour_picks = game.split(",")
         for colour_pick in colour_picks:
             colour_pick = colour_pick.strip()
             [number, colour] = colour_pick.split()
-            number = int(number)
-            if number > colour_dict[colour] and game_possible:
-                game_index_total -= game_index
-                game_possible = False
-                break
-
-    for game in results_list:
-        colour_picks = game.split(",")
-        for colour_pick in colour_picks:
-            colour_pick = colour_pick.strip()
-            [number, colour] = colour_pick.split()
-            print(number, colour)
             number = int(number)
             if colour == "red":
                 red_list.append(number)
@@ -51,8 +40,9 @@ for line in game_results_list:
                 green_list.append(number)
             if colour == "blue":
                 blue_list.append(number)
-            print(red_list, green_list, blue_list)
-
+            if number > colour_dict[colour] and game_possible:
+                game_index_total -= game_index
+                game_possible = False
     if red_list:
         min_cubes_dict["red"] = max(red_list)
     if green_list:
